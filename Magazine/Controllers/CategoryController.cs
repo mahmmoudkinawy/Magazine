@@ -1,5 +1,5 @@
 ﻿namespace Magazine.Controllers;
-public class CategoryController : Controller
+public class CategoryController : BaseController
 {
     private readonly IUnitOfWork _unitOfWork;
 

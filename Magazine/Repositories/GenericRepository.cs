@@ -10,8 +10,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _dbSet = _context.Set<T>();
     }
 
-    public async Task<IReadOnlyList<T>> GetAllAsync()
-        => await _dbSet.ToListAsync();
+    public async Task<IReadOnlyList<T>> GetAllAsync(string? includeProperties = null)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (includeProperties != null)
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                query = query.Include(includeProperty);
+
+        return await query.ToListAsync();
+    }
 
 
     public async Task<T> GetAsync(Expression<Func<T, bool>> filter)

@@ -5,6 +5,7 @@ public class MagazineContext : DbContext
     { }
 
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,5 +22,14 @@ public class MagazineContext : DbContext
                 Id = 2,
                 Name = "Programming"
             });
+
+        modelBuilder.Entity<Post>()
+                .HasData(new Post
+                {
+                    Id = 1,
+                    CategoryId = 2,
+                    Content = "Bla bla bla this is a content",
+                    CreatedDate = new DateTime(2018, 01, 01)
+                });
     }
 }

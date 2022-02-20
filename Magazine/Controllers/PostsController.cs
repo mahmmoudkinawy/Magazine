@@ -74,6 +74,8 @@ public class PostsController : BaseController
 
     public async Task<IActionResult> Delete(int id)
     {
+        //Can't control this flow at all
+
         //if (id == 0) return;
 
         var post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id, "Category");

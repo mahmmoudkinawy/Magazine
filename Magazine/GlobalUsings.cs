@@ -10,3 +10,6 @@ global using Magazine.Repositories;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Rendering;
 global using Magazine.ViewModels;
+global using Magazine.Extensions;
+global using System.Text.Json;
+global using Magazine.Middleware;

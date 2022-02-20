@@ -72,5 +72,28 @@ public class PostsController : BaseController
         return View(postViewModel);
     }
 
+    public async Task<IActionResult> Delete(int id)
+    {
+        //if (id == 0) return;
+
+        var post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id, "Category");
+
+        //if (post = null) return;
+
+        return View(post);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeletePost(int id)
+    {
+        var post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id, "Category");
+
+        _unitOfWork.PostRepository.Delete(post);
+        await _unitOfWork.SaveAsync();
+        TempData["success"] = "Post Deleted Successfully";
+
+        return RedirectToAction(nameof(Index));
+    }
 
 }

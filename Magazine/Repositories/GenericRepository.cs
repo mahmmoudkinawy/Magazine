@@ -27,11 +27,17 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     }
 
 
-    public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
+    public async Task<T> GetAsync(Expression<Func<T, bool>> filter,
+        string? includeProperties = null)
     {
         IQueryable<T> query = _dbSet;
 
         query = query.Where(filter);
+
+        if (includeProperties != null)
+            foreach (var includePoperty in includeProperties.Split(new char[] { ',' },
+                    StringSplitOptions.RemoveEmptyEntries))
+                query = query.Include(includePoperty);
 
         return await query.FirstOrDefaultAsync();
     }

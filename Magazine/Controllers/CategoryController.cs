@@ -18,6 +18,24 @@ public class CategoryController : Controller
         {
             _unitOfWork.CategoryRepository.Add(category);
             await _unitOfWork.SaveAsync();
+            TempData["success"] = "Category Created Successfully";
+            return RedirectToAction(nameof(Index));
+        }
+        return View(category);
+    }
+
+    public async Task<IActionResult> Update(int id)
+        => View(await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id));
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Update(Category category)
+    {
+        if (ModelState.IsValid)
+        {
+            _unitOfWork.CategoryRepository.Update(category);
+            await _unitOfWork.SaveAsync();
+            TempData["success"] = "Category Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
         return View(category);

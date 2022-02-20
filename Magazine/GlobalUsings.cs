@@ -2,3 +2,5 @@
 global using Microsoft.EntityFrameworkCore;
 global using Magazine.Models;
 global using Magazine.Data;
+global using Magazine.Interfaces;
+global using System.Linq.Expressions;

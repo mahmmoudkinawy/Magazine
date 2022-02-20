@@ -1,0 +1,23 @@
+﻿@model IReadOnlyList<Category>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

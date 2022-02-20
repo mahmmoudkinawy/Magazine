@@ -5,3 +5,4 @@ global using Magazine.Data;
 global using Magazine.Interfaces;
 global using System.Linq.Expressions;
 global using Magazine.Repositories;
+global using Microsoft.AspNetCore.Mvc;

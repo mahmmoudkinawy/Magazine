@@ -25,7 +25,11 @@
                 <th scope="row">@post.Content</th>
                 <td>@post.CreatedDate.ToLocalTime()</td>
                 <td>@post.Category.Name</td>
-                <td></td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@post.Id" class="btn btn-secondary">
+                        Update
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

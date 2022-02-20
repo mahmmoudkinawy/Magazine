@@ -40,4 +40,37 @@ public class PostsController : BaseController
 
         return View(postViewModel);
     }
+
+    public async Task<IActionResult> Update(int id)
+    {
+        var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+
+        var postViewModel = new PostViewModel
+        {
+            Post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id),
+            Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            })
+        };
+
+        return View(postViewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Update(PostViewModel postViewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            _unitOfWork.PostRepository.Update(postViewModel.Post);
+            await _unitOfWork.SaveAsync();
+            TempData["success"] = "Post Updated Successfully";
+            return RedirectToAction(nameof(Index));
+        }
+        return View(postViewModel);
+    }
+
+
 }

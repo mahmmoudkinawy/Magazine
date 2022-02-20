@@ -12,8 +12,10 @@ public class Post
     public DateTime CreatedDate { get; set; }
 
     [Required]
+    [Display(Name = "Category")]
     public int CategoryId { get; set; }
 
     [ForeignKey("CategoryId")]
+    [ValidateNever]
     public Category Category { get; set; }
 }

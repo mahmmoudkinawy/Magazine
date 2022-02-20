@@ -1,5 +1,6 @@
 ﻿global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 global using Microsoft.EntityFrameworkCore;
 global using Magazine.Models;
 global using Magazine.Data;
@@ -7,3 +8,4 @@ global using Magazine.Interfaces;
 global using System.Linq.Expressions;
 global using Magazine.Repositories;
 global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.Rendering;

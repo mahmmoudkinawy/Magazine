@@ -1,13 +1,7 @@
-﻿using Magazine.ViewModels;
-using System.Linq;
-
-namespace Magazine.Controllers;
+﻿namespace Magazine.Controllers;
 public class PostsController : BaseController
 {
     private readonly IUnitOfWork _unitOfWork;
-
-    [BindProperty]
-    public PostViewModel PostViewModel { get; set; }
 
     public PostsController(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
@@ -37,13 +31,13 @@ public class PostsController : BaseController
     {
         if (ModelState.IsValid)
         {
-            PostViewModel.Post.CreatedDate = DateTime.Now;
-            _unitOfWork.PostRepository.Add(PostViewModel.Post);
+            postViewModel.Post.CreatedDate = DateTime.Now;
+            _unitOfWork.PostRepository.Add(postViewModel.Post);
             await _unitOfWork.SaveAsync();
             TempData["success"] = "Post Created Successfully";
             return RedirectToAction(nameof(Index));
         }
 
-        return View(PostViewModel);
+        return View(postViewModel);
     }
 }

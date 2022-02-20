@@ -9,3 +9,4 @@ global using System.Linq.Expressions;
 global using Magazine.Repositories;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Rendering;
+global using Magazine.ViewModels;

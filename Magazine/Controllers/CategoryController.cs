@@ -40,4 +40,27 @@ public class CategoryController : Controller
         }
         return View(category);
     }
+
+    public async Task<IActionResult> Delete(int id)
+        => View(await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id));
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeletePost(int id)
+    {
+        //I must redirect to page not found
+        //if (id == 0) return;
+
+        var category = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id);
+
+        //I must redirect to page not found
+        //if (id == null) return;
+
+        _unitOfWork.CategoryRepository.Delete(category);
+        await _unitOfWork.SaveAsync();
+        TempData["success"] = "Category Removed Successfully";
+
+        return RedirectToAction(nameof(Index));
+    }
+
 }

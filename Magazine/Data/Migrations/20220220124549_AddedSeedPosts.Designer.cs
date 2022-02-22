@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Magazine.Data.Migrations
 {
-    [DbContext(typeof(MagazineContext))]
+    [DbContext(typeof(MagazineDbContext))]
     [Migration("20220220124549_AddedSeedPosts")]
     partial class AddedSeedPosts
     {

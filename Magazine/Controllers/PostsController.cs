@@ -1,5 +1,5 @@
 ﻿namespace Magazine.Controllers;
-public class PostsController : BaseController
+public class PostsController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
 

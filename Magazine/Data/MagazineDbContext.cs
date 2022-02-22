@@ -1,7 +1,7 @@
 ﻿namespace Magazine.Data;
-public class MagazineContext : DbContext
+public class MagazineDbContext : DbContext
 {
-    public MagazineContext(DbContextOptions<MagazineContext> options) : base(options)
+    public MagazineDbContext(DbContextOptions<MagazineDbContext> options) : base(options)
     { }
 
     public DbSet<Category> Categories { get; set; }
@@ -12,16 +12,16 @@ public class MagazineContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Category>()
-            .HasData(new Category
-            {
-                Id = 1,
-                Name = "Tourism"
-            },
-            new Category
-            {
-                Id = 2,
-                Name = "Programming"
-            });
+                .HasData(new Category
+                {
+                    Id = 1,
+                    Name = "Tourism"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Programming"
+                });
 
         modelBuilder.Entity<Post>()
                 .HasData(new Post

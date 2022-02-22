@@ -1,9 +1,9 @@
 ﻿namespace Magazine.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly MagazineContext _context;
+    private readonly MagazineDbContext _context;
 
-    public UnitOfWork(MagazineContext context)
+    public UnitOfWork(MagazineDbContext context)
     {
         _context = context;
         CategoryRepository = new CategoryRepository(_context);

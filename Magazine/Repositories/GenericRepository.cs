@@ -1,10 +1,10 @@
 ﻿namespace Magazine.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly MagazineContext _context;
+    private readonly MagazineDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public GenericRepository(MagazineContext context)
+    public GenericRepository(MagazineDbContext context)
     {
         _context = context;
         _dbSet = _context.Set<T>();

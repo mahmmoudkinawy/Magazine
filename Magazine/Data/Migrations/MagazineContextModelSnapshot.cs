@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Magazine.Data.Migrations
 {
-    [DbContext(typeof(MagazineContext))]
+    [DbContext(typeof(MagazineDbContext))]
     partial class MagazineContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

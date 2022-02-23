@@ -26,7 +26,8 @@ public class MagazineDbContext : DbContext
         modelBuilder.Entity<Post>()
                 .HasData(new Post
                 {
-                    Id = 1,
+                    Id = 1, 
+                    Title = "New Asp.net",
                     CategoryId = 2,
                     Content = "Bla bla bla this is a content",
                     CreatedDate = new DateTime(2018, 01, 01)

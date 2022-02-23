@@ -1,0 +1,31 @@
+﻿@model Post
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div>
+            <a class="btn btn-danger" asp-action="Index">Back</a>
+        </div>
+        <h1 class="text-center">
+            @Model.Title
+        </h1>
+    </div>
+    <div class="row ">
+        <p class="font-weight-bold">
+            Created at: @Model.CreatedDate.ToShortDateString()
+        </p>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-10">
+            <p class="font-weight-normal" style="font-size: 20px">
+                @Html.Raw(Model.Content)
+            </p>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-outline-secondary" style="cursor: default">@Model.Category.Name</button>
+        </div>
+    </div>
+</div>

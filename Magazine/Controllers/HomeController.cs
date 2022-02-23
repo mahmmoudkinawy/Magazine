@@ -1,17 +1,19 @@
 ﻿namespace Magazine.Controllers;
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IGenericRepository<Post> _postRepository;
 
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+    public HomeController(IGenericRepository<Post> postRepository)
+        => _postRepository = postRepository;
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+    public async Task<IActionResult> Index()
+       => View(await _postRepository.GetAllAsync(includeProperties: "Category"));
+
+
+    public async Task<IActionResult> Details(int id)
+        => View(await _postRepository.GetAsync(a => a.Id == id,
+                    includeProperties: "Category"));
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

@@ -1,8 +1,32 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Post>
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    @foreach (var post in Model)
+    {
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">@post.Title</h5>
+                    <p class="card-text">
+                        @if (post.Content.Length <= 30)
+                        {
+                            @Html.Raw(post.Content)
+                        }
+                        else
+                        {
+                            @*I do not know why it's not working at all!! + I can't debug it*@
+                            @Html.Raw(post.Content.Substring(0, 31) + "...")
+                        }
+                    </p>
+                    <a class="btn btn-success" asp-action="Details" asp-route-id="@post.Id">
+                        Go to Article
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+

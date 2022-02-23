@@ -7,7 +7,7 @@ public static class ApplicationServicesExtension
         services.AddDbContext<MagazineDbContext>(options =>
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         return services;
     }

@@ -21,9 +21,10 @@
                             @Html.Raw(post.Content.Substring(0, 31) + "...")
                         }
                     </p>
-                    <a class="btn btn-success" asp-action="Details" asp-route-id="@post.Id">
+                    <a class="btn btn-success px-4" asp-action="Details" asp-route-id="@post.Id">
                         Go to Article
-                    </a>
+                    </a>            
+                    <button type="button" class="btn btn-outline-secondary" style="cursor: default">@post.Category.Name</button>
                 </div>
             </div>
         </div>

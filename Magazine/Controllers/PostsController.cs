@@ -1,16 +1,22 @@
 ﻿namespace Magazine.Controllers;
 public class PostsController : Controller
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IGenericRepository<Post> _postRepository;
+    private readonly IGenericRepository<Category> _categoryRepository;
 
-    public PostsController(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+    public PostsController(IGenericRepository<Post> portRepository,
+        IGenericRepository<Category> categoryRepository)
+    {
+        _postRepository = portRepository;
+        _categoryRepository = categoryRepository;
+    }
 
     public async Task<IActionResult> Index() =>
-        View(await _unitOfWork.PostRepository.GetAllAsync(includeProperties: "Category"));
+        View(await _postRepository.GetAllAsync(includeProperties: "Category"));
 
     public async Task<IActionResult> Create()
     {
-        var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+        var categories = await _categoryRepository.GetAllAsync();
 
         var postViewModel = new PostViewModel
         {
@@ -32,8 +38,8 @@ public class PostsController : Controller
         if (ModelState.IsValid)
         {
             postViewModel.Post.CreatedDate = DateTime.Now;
-            _unitOfWork.PostRepository.Add(postViewModel.Post);
-            await _unitOfWork.SaveAsync();
+            _postRepository.Add(postViewModel.Post);
+            await _postRepository.SaveChangesAsync();
             TempData["success"] = "Post Created Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -43,11 +49,11 @@ public class PostsController : Controller
 
     public async Task<IActionResult> Update(int id)
     {
-        var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+        var categories = await _categoryRepository.GetAllAsync();
 
         var postViewModel = new PostViewModel
         {
-            Post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id),
+            Post = await _postRepository.GetAsync(p => p.Id == id),
             Categories = categories.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
@@ -64,8 +70,8 @@ public class PostsController : Controller
     {
         if (ModelState.IsValid)
         {
-            _unitOfWork.PostRepository.Update(postViewModel.Post);
-            await _unitOfWork.SaveAsync();
+            _postRepository.Update(postViewModel.Post);
+            await _postRepository.SaveChangesAsync();
             TempData["success"] = "Post Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -78,7 +84,7 @@ public class PostsController : Controller
 
         //if (id == 0) return;
 
-        var post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id, "Category");
+        var post = await _postRepository.GetAsync(p => p.Id == id, "Category");
 
         //if (post = null) return;
 
@@ -89,10 +95,10 @@ public class PostsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeletePost(int id)
     {
-        var post = await _unitOfWork.PostRepository.GetAsync(p => p.Id == id, "Category");
+        var post = await _postRepository.GetAsync(p => p.Id == id, "Category");
 
-        _unitOfWork.PostRepository.Delete(post);
-        await _unitOfWork.SaveAsync();
+        _postRepository.Delete(post);
+        await _postRepository.SaveChangesAsync();
         TempData["success"] = "Post Deleted Successfully";
 
         return RedirectToAction(nameof(Index));

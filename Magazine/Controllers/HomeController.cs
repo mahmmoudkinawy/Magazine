@@ -1,9 +1,9 @@
 ﻿namespace Magazine.Controllers;
 public class HomeController : Controller
 {
-    private readonly IGenericRepository<Post> _postRepository;
+    private readonly IGenericRepository<Article> _postRepository;
 
-    public HomeController(IGenericRepository<Post> postRepository)
+    public HomeController(IGenericRepository<Article> postRepository)
         => _postRepository = postRepository;
 
     public async Task<IActionResult> Index()

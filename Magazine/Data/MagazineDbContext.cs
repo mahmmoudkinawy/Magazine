@@ -5,7 +5,7 @@ public class MagazineDbContext : DbContext
     { }
 
     public DbSet<Category> Categories { get; set; }
-    public DbSet<Post> Posts { get; set; }
+    public DbSet<Article> Articles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,8 +23,8 @@ public class MagazineDbContext : DbContext
                     Name = "Programming"
                 });
 
-        modelBuilder.Entity<Post>()
-                .HasData(new Post
+        modelBuilder.Entity<Article>()
+                .HasData(new Article
                 {
                     Id = 1, 
                     Title = "New Asp.net",

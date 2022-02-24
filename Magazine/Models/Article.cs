@@ -1,5 +1,5 @@
 ﻿namespace Magazine.Models;
-public class Post
+public class Article
 {
     public int Id { get; set; }
 

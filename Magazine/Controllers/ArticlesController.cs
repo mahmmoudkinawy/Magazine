@@ -1,10 +1,10 @@
 ﻿namespace Magazine.Controllers;
-public class PostsController : Controller
+public class ArticlesController : Controller
 {
-    private readonly IGenericRepository<Post> _postRepository;
+    private readonly IGenericRepository<Article> _postRepository;
     private readonly IGenericRepository<Category> _categoryRepository;
 
-    public PostsController(IGenericRepository<Post> portRepository,
+    public ArticlesController(IGenericRepository<Article> portRepository,
         IGenericRepository<Category> categoryRepository)
     {
         _postRepository = portRepository;
@@ -20,7 +20,7 @@ public class PostsController : Controller
 
         var postViewModel = new PostViewModel
         {
-            Post = new Post(),
+            Post = new Article(),
             Categories = categories.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),

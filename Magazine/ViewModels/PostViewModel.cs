@@ -4,5 +4,5 @@ public class PostViewModel
     [ValidateNever]
     public IEnumerable<SelectListItem> Categories { get; set; }
 
-    public Post Post { get; set; }
+    public Article Post { get; set; }
 }

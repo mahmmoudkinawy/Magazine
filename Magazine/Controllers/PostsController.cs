@@ -3,14 +3,12 @@ public class PostsController : Controller
 {
     private readonly IGenericRepository<Post> _postRepository;
     private readonly IGenericRepository<Category> _categoryRepository;
-    private readonly MagazineDbContext _context;
 
     public PostsController(IGenericRepository<Post> portRepository,
-        IGenericRepository<Category> categoryRepository, MagazineDbContext context)
+        IGenericRepository<Category> categoryRepository)
     {
         _postRepository = portRepository;
         _categoryRepository = categoryRepository;
-        _context = context;
     }
 
     public async Task<IActionResult> Index() =>
@@ -41,7 +39,6 @@ public class PostsController : Controller
         {
             postViewModel.Post.CreatedDate = DateTime.Now;
             _postRepository.Add(postViewModel.Post);
-            await _context.SaveChangesAsync();
             TempData["success"] = "Post Created Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -73,7 +70,6 @@ public class PostsController : Controller
         if (ModelState.IsValid)
         {
             _postRepository.Update(postViewModel.Post);
-            await _context.SaveChangesAsync();
             TempData["success"] = "Post Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -100,7 +96,6 @@ public class PostsController : Controller
         var post = await _postRepository.GetAsync(p => p.Id == id, "Category");
 
         _postRepository.Delete(post);
-        await _context.SaveChangesAsync();
         TempData["success"] = "Post Deleted Successfully";
 
         return RedirectToAction(nameof(Index));

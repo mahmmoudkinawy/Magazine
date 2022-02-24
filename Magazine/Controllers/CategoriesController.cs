@@ -2,14 +2,10 @@
 public class CategoriesController : Controller
 {
     private readonly IGenericRepository<Category> _categoryRepository;
-    private readonly MagazineDbContext _context;
 
-    public CategoriesController(IGenericRepository<Category> categoryRepository,
-        MagazineDbContext context)
-    {
-        _categoryRepository = categoryRepository;
-        _context = context;
-    } 
+    public CategoriesController(IGenericRepository<Category> categoryRepository)
+        => _categoryRepository = categoryRepository;
+
 
     public async Task<IActionResult> Index()
         => View(await _categoryRepository.GetAllAsync());
@@ -23,7 +19,6 @@ public class CategoriesController : Controller
         if (ModelState.IsValid)
         {
             _categoryRepository.Add(category);
-            await _context.SaveChangesAsync();
             TempData["success"] = "Category Created Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -40,7 +35,6 @@ public class CategoriesController : Controller
         if (ModelState.IsValid)
         {
             _categoryRepository.Update(category);
-            await _context.SaveChangesAsync();
             TempData["success"] = "Category Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -63,7 +57,6 @@ public class CategoriesController : Controller
         //if (id == null) return;
 
         _categoryRepository.Delete(category);
-        await _context.SaveChangesAsync();
         TempData["success"] = "Category Removed Successfully";
 
         return RedirectToAction(nameof(Index));

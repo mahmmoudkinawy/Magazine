@@ -42,9 +42,21 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await query.FirstOrDefaultAsync();
     }
 
-    public void Add(T entity) => _dbSet.Add(entity);
+    public void Add(T entity)
+    {
+        _dbSet.Add(entity);
+        _context.SaveChanges();
+    }
 
-    public void Update(T entity) => _dbSet.Update(entity);
+    public void Update(T entity)
+    {
+        _dbSet.Update(entity);
+        _context.SaveChanges();
+    }
 
-    public void Delete(T entity) => _dbSet.Remove(entity);
+    public void Delete(T entity)
+    {
+        _dbSet.Remove(entity);
+        _context.SaveChanges();
+    }
 }

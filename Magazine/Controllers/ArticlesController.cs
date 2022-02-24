@@ -1,26 +1,26 @@
 ﻿namespace Magazine.Controllers;
 public class ArticlesController : Controller
 {
-    private readonly IGenericRepository<Article> _postRepository;
+    private readonly IGenericRepository<Article> _articleRepository;
     private readonly IGenericRepository<Category> _categoryRepository;
 
     public ArticlesController(IGenericRepository<Article> portRepository,
         IGenericRepository<Category> categoryRepository)
     {
-        _postRepository = portRepository;
+        _articleRepository = portRepository;
         _categoryRepository = categoryRepository;
     }
 
     public async Task<IActionResult> Index() =>
-        View(await _postRepository.GetAllAsync(includeProperties: "Category"));
+        View(await _articleRepository.GetAllAsync(includeProperties: "Category"));
 
     public async Task<IActionResult> Create()
     {
         var categories = await _categoryRepository.GetAllAsync();
 
-        var postViewModel = new PostViewModel
+        var articleViewModel = new ArticleViewModel
         {
-            Post = new Article(),
+            Article = new Article(),
             Categories = categories.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
@@ -28,31 +28,31 @@ public class ArticlesController : Controller
             })
         };
 
-        return View(postViewModel);
+        return View(articleViewModel);
     }
 
     [HttpPost, ActionName("Create")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> CreatePost(PostViewModel postViewModel)
+    public IActionResult CreatePost(ArticleViewModel articleViewModel)
     {
         if (ModelState.IsValid)
         {
-            postViewModel.Post.CreatedDate = DateTime.Now;
-            _postRepository.Add(postViewModel.Post);
-            TempData["success"] = "Post Created Successfully";
+            articleViewModel.Article.CreatedDate = DateTime.Now;
+            _articleRepository.Add(articleViewModel.Article);
+            TempData["success"] = "Article Created Successfully";
             return RedirectToAction(nameof(Index));
         }
 
-        return View(postViewModel);
+        return View(articleViewModel);
     }
 
     public async Task<IActionResult> Update(int id)
     {
         var categories = await _categoryRepository.GetAllAsync();
 
-        var postViewModel = new PostViewModel
+        var articleViewModel = new ArticleViewModel
         {
-            Post = await _postRepository.GetAsync(p => p.Id == id),
+            Article = await _articleRepository.GetAsync(p => p.Id == id),
             Categories = categories.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
@@ -60,20 +60,20 @@ public class ArticlesController : Controller
             })
         };
 
-        return View(postViewModel);
+        return View(articleViewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(PostViewModel postViewModel)
+    public IActionResult Update(ArticleViewModel articleViewModel)
     {
         if (ModelState.IsValid)
         {
-            _postRepository.Update(postViewModel.Post);
-            TempData["success"] = "Post Updated Successfully";
+            _articleRepository.Update(articleViewModel.Article);
+            TempData["success"] = "Article Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
-        return View(postViewModel);
+        return View(articleViewModel);
     }
 
     public async Task<IActionResult> Delete(int id)
@@ -82,21 +82,21 @@ public class ArticlesController : Controller
 
         //if (id == 0) return;
 
-        var post = await _postRepository.GetAsync(p => p.Id == id, "Category");
+        var article = await _articleRepository.GetAsync(p => p.Id == id, "Category");
 
         //if (post = null) return;
 
-        return View(post);
+        return View(article);
     }
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeletePost(int id)
     {
-        var post = await _postRepository.GetAsync(p => p.Id == id, "Category");
+        var article = await _articleRepository.GetAsync(p => p.Id == id, "Category");
 
-        _postRepository.Delete(post);
-        TempData["success"] = "Post Deleted Successfully";
+        _articleRepository.Delete(article);
+        TempData["success"] = "Article Deleted Successfully";
 
         return RedirectToAction(nameof(Index));
     }

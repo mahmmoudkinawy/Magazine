@@ -4,10 +4,10 @@ public class ArticlesController : Controller
     private readonly IGenericRepository<Article> _articleRepository;
     private readonly IGenericRepository<Category> _categoryRepository;
 
-    public ArticlesController(IGenericRepository<Article> portRepository,
+    public ArticlesController(IGenericRepository<Article> articleRepository,
         IGenericRepository<Category> categoryRepository)
     {
-        _articleRepository = portRepository;
+        _articleRepository = articleRepository;
         _categoryRepository = categoryRepository;
     }
 
@@ -33,12 +33,12 @@ public class ArticlesController : Controller
 
     [HttpPost, ActionName("Create")]
     [ValidateAntiForgeryToken]
-    public IActionResult CreatePost(ArticleViewModel articleViewModel)
+    public async Task<IActionResult> CreatePost(ArticleViewModel articleViewModel)
     {
         if (ModelState.IsValid)
         {
             articleViewModel.Article.CreatedDate = DateTime.Now;
-            _articleRepository.Add(articleViewModel.Article);
+            await _articleRepository.Add(articleViewModel.Article);
             TempData["success"] = "Article Created Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -65,11 +65,11 @@ public class ArticlesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(ArticleViewModel articleViewModel)
+    public async Task<IActionResult> Update(ArticleViewModel articleViewModel)
     {
         if (ModelState.IsValid)
         {
-            _articleRepository.Update(articleViewModel.Article);
+            await _articleRepository.Update(articleViewModel.Article);
             TempData["success"] = "Article Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -95,7 +95,7 @@ public class ArticlesController : Controller
     {
         var article = await _articleRepository.GetAsync(p => p.Id == id, "Category");
 
-        _articleRepository.Delete(article);
+        await _articleRepository.Delete(article);
         TempData["success"] = "Article Deleted Successfully";
 
         return RedirectToAction(nameof(Index));

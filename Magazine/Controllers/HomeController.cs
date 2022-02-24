@@ -1,16 +1,16 @@
 ﻿namespace Magazine.Controllers;
 public class HomeController : Controller
 {
-    private readonly IGenericRepository<Article> _postRepository;
+    private readonly IGenericRepository<Article> _articleRepository;
 
-    public HomeController(IGenericRepository<Article> postRepository)
-        => _postRepository = postRepository;
+    public HomeController(IGenericRepository<Article> articleRepository)
+        => _articleRepository = articleRepository;
 
     public async Task<IActionResult> Index()
-       => View(await _postRepository.GetAllAsync(includeProperties: "Category"));
+       => View(await _articleRepository.GetAllAsync(includeProperties: "Category"));
 
     public async Task<IActionResult> Details(int id)
-        => View(await _postRepository.GetAsync(a => a.Id == id,
+        => View(await _articleRepository.GetAsync(a => a.Id == id,
                     includeProperties: "Category"));
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -21,24 +21,24 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var post in Model)
+                @foreach (var article in Model)
                 {
                     <tr>
-                        <td class="col-2">@post.Title</td>
+                        <td class="col-2">@article.Title</td>
                         <th class="col-3" scope="row">
                             @{
                                 //Same issue can not substring the string
-                                var content = @Html.Raw(post.Content);
+                                var content = @Html.Raw(article.Content);
                             }
                             @content
                         </th>
-                        <td class="col-2">@post.CreatedDate.ToLocalTime()</td>
-                        <td class="col-2">@post.Category.Name</td>
+                        <td class="col-2">@article.CreatedDate.ToLocalTime()</td>
+                        <td class="col-2">@article.Category.Name</td>
                         <td class="col-3">
-                            <a asp-action="Update" asp-route-id="@post.Id" class="btn btn-secondary">
+                            <a asp-action="Update" asp-route-id="@article.Id" class="btn btn-secondary">
                                 Update
                             </a>
-                            <a asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger">
+                            <a asp-action="Delete" asp-route-id="@article.Id" class="btn btn-danger">
                                 Delete
                             </a>
                         </td>

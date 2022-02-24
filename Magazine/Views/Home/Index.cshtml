@@ -4,27 +4,27 @@
 }
 
 <div class="row">
-    @foreach (var post in Model)
+    @foreach (var article in Model)
     {
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">@post.Title</h5>
+                    <h5 class="card-title text-center">@article.Title</h5>
                     <p class="card-text">
-                        @if (post.Content.Length <= 30)
+                        @if (article.Content.Length <= 30)
                         {
-                            @Html.Raw(post.Content)
+                            @Html.Raw(article.Content)
                         }
                         else
                         {
                             @*I do not know why it's not working at all!! + I can't debug it*@
-                            @Html.Raw(post.Content.Substring(0, 31) + "...")
+                            @Html.Raw(article.Content.Substring(0, 31) + "...")
                         }
                     </p>
-                    <a class="btn btn-success px-4" asp-action="Details" asp-route-id="@post.Id">
+                    <a class="btn btn-success px-4" asp-action="Details" asp-route-id="@article.Id">
                         Go to Article
                     </a>            
-                    <button type="button" class="btn btn-outline-secondary" style="cursor: default">@post.Category.Name</button>
+                    <button type="button" class="btn btn-outline-secondary" style="cursor: default">@article.Category.Name</button>
                 </div>
             </div>
         </div>

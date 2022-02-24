@@ -18,7 +18,7 @@ public class CategoriesController : Controller
     {
         if (ModelState.IsValid)
         {
-            _categoryRepository.Add(category);
+            await _categoryRepository.Add(category);
             TempData["success"] = "Category Created Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -34,7 +34,7 @@ public class CategoriesController : Controller
     {
         if (ModelState.IsValid)
         {
-            _categoryRepository.Update(category);
+            await _categoryRepository.Update(category);
             TempData["success"] = "Category Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -56,7 +56,7 @@ public class CategoriesController : Controller
         //I must redirect to page not found
         //if (id == null) return;
 
-        _categoryRepository.Delete(category);
+        await _categoryRepository.Delete(category);
         TempData["success"] = "Category Removed Successfully";
 
         return RedirectToAction(nameof(Index));

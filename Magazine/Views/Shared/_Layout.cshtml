@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Magazine.styles.css" asp-append-version="true" />
-
 </head>
 <body>
     <header>
@@ -24,14 +23,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="Index">Posts</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link text-dark dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content Managment</a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Index">Articles</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -45,11 +43,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        @*<div class="container">
-            &copy; 2022 - Magazine - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>*@
-    </footer>
+    @*    <footer class="border-top footer text-muted">
+        <div class="container">
+        &copy; 2022 - Magazine - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,7 +1,11 @@
 ﻿namespace Magazine.Models;
-public class Post
+public class Article
 {
     public int Id { get; set; }
+
+    [Required]
+    [MaxLength(50)]
+    public string Title { get; set; }
 
     [Required]
     [MaxLength(10000)]

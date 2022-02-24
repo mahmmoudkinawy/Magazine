@@ -1,10 +1,10 @@
 ﻿namespace Magazine.Repositories;
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly MagazineContext _context;
+    private readonly MagazineDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public GenericRepository(MagazineContext context)
+    public GenericRepository(MagazineDbContext context)
     {
         _context = context;
         _dbSet = _context.Set<T>();
@@ -42,10 +42,21 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await query.FirstOrDefaultAsync();
     }
 
-    public void Add(T entity) => _dbSet.Add(entity);
+    public async Task Add(T entity)
+    {
+        _dbSet.Add(entity); //Just try to search about use Add or AddAsync
+        await _context.SaveChangesAsync();
+    }
 
-    public void Update(T entity) => _dbSet.Update(entity);
+    public async Task Update(T entity)
+    {
+        _dbSet.Update(entity);
+        await _context.SaveChangesAsync();
+    }
 
-    public void Delete(T entity) => _dbSet.Remove(entity);
-
+    public async Task Delete(T entity)
+    {
+        _dbSet.Remove(entity);
+        await _context.SaveChangesAsync();
+    }
 }

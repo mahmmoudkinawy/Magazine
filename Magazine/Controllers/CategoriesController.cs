@@ -1,12 +1,14 @@
 ﻿namespace Magazine.Controllers;
-public class CategoryController : BaseController
+public class CategoriesController : Controller
 {
-    private readonly IUnitOfWork _unitOfWork;
+    private readonly IGenericRepository<Category> _categoryRepository;
 
-    public CategoryController(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+    public CategoriesController(IGenericRepository<Category> categoryRepository)
+        => _categoryRepository = categoryRepository;
+
 
     public async Task<IActionResult> Index()
-        => View(await _unitOfWork.CategoryRepository.GetAllAsync());
+        => View(await _categoryRepository.GetAllAsync());
 
     public IActionResult Create() => View();
 
@@ -16,8 +18,7 @@ public class CategoryController : BaseController
     {
         if (ModelState.IsValid)
         {
-            _unitOfWork.CategoryRepository.Add(category);
-            await _unitOfWork.SaveAsync();
+            await _categoryRepository.Add(category);
             TempData["success"] = "Category Created Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -25,7 +26,7 @@ public class CategoryController : BaseController
     }
 
     public async Task<IActionResult> Update(int id)
-        => View(await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id));
+        => View(await _categoryRepository.GetAsync(c => c.Id == id));
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -33,8 +34,7 @@ public class CategoryController : BaseController
     {
         if (ModelState.IsValid)
         {
-            _unitOfWork.CategoryRepository.Update(category);
-            await _unitOfWork.SaveAsync();
+            await _categoryRepository.Update(category);
             TempData["success"] = "Category Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
@@ -42,7 +42,7 @@ public class CategoryController : BaseController
     }
 
     public async Task<IActionResult> Delete(int id)
-        => View(await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id));
+        => View(await _categoryRepository.GetAsync(c => c.Id == id));
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
@@ -51,13 +51,12 @@ public class CategoryController : BaseController
         //I must redirect to page not found
         //if (id == 0) return;
 
-        var category = await _unitOfWork.CategoryRepository.GetAsync(c => c.Id == id);
+        var category = await _categoryRepository.GetAsync(c => c.Id == id);
 
         //I must redirect to page not found
         //if (id == null) return;
 
-        _unitOfWork.CategoryRepository.Delete(category);
-        await _unitOfWork.SaveAsync();
+        await _categoryRepository.Delete(category);
         TempData["success"] = "Category Removed Successfully";
 
         return RedirectToAction(nameof(Index));

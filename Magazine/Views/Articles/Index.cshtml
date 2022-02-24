@@ -1,0 +1,57 @@
+﻿@model IReadOnlyList<Article>
+@{
+    ViewData["Title"] = "Articles";
+}
+
+
+<div class="container">
+    <div class="col-6">
+        <a asp-action="Create" class="btn btn-primary">Create New Article</a>
+    </div>
+    @if (Model.Count > 0)
+    {
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="col-2">Title</th>
+                    <th scope="col" class="col-3">Content</th>
+                    <th scope="col" class="col-2">Created Date</th>
+                    <th scope="col" class="col-2">Category</th>
+                    <th scope="col" class="col-3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var article in Model)
+                {
+                    <tr>
+                        <td class="col-2">@article.Title</td>
+                        <th class="col-3" scope="row">
+                            @{
+                                //Same issue can not substring the string
+                                var content = @Html.Raw(article.Content);
+                            }
+                            @content
+                        </th>
+                        <td class="col-2">@article.CreatedDate.ToLocalTime()</td>
+                        <td class="col-2">@article.Category.Name</td>
+                        <td class="col-3">
+                            <a asp-action="Update" asp-route-id="@article.Id" class="btn btn-secondary">
+                                Update
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@article.Id" class="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+    else
+    {
+        <div class="alert alert-danger mt-3" role="alert">
+            There is no Articles available.
+        </div>
+    }
+</div>

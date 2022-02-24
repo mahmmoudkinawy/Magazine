@@ -4,10 +4,10 @@ public static class ApplicationServicesExtension
     public static IServiceCollection AddApplicationServices(this IServiceCollection services,
         IConfiguration config)
     {
-        services.AddDbContext<MagazineContext>(options =>
+        services.AddDbContext<MagazineDbContext>(options =>
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         return services;
     }

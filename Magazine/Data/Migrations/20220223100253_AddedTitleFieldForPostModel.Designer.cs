@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Magazine.Data.Migrations
 {
     [DbContext(typeof(MagazineDbContext))]
-    [Migration("20220220124549_AddedSeedPosts")]
-    partial class AddedSeedPosts
+    [Migration("20220223100253_AddedTitleFieldForPostModel")]
+    partial class AddedTitleFieldForPostModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,11 @@ namespace Magazine.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -75,7 +80,8 @@ namespace Magazine.Data.Migrations
                             Id = 1,
                             CategoryId = 2,
                             Content = "Bla bla bla this is a content",
-                            CreatedDate = new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            CreatedDate = new DateTime(2018, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "New Asp.net"
                         });
                 });
 

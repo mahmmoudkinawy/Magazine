@@ -1,4 +1,6 @@
 using Magazine.DbInitializer;
+using Magazine.Helpers;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -26,7 +30,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-SeedDatabase();
+//I think that's a bad idea to do this:- 
+//1 - First because write a function inside the middleware 
+//2 - To make it async?
+await SeedDatabaseAsync();
 
 app.UseAuthentication();
 
@@ -40,10 +47,9 @@ app.MapRazorPages();
 
 app.Run();
 
-
-void SeedDatabase()
+async Task SeedDatabaseAsync()
 {
     using var scope = app.Services.CreateScope();
     var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-    dbInitializer.Initialize();
+    await dbInitializer.InitializeAsync();
 }

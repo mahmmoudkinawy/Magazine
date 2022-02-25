@@ -17,35 +17,25 @@ public class DbInitializer : IDbInitializer
         _context = context;
     }
 
-    public void Initialize()
+    public async Task InitializeAsync()
     {
-        try
+        if (_context.Database.GetPendingMigrations().Any())
+            await _context.Database.MigrateAsync();
+
+        if (!await _roleManager.RoleExistsAsync(Constants.RoleAdmin))
         {
-            if (_context.Database.GetPendingMigrations().Count() > 0)
+            await _roleManager.CreateAsync(new IdentityRole(Constants.RoleAdmin));
+            await _roleManager.CreateAsync(new IdentityRole(Constants.RoleUser));
+
+            await _userManager.CreateAsync(new IdentityUser
             {
-                _context.Database.Migrate();
-            }
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
-
-        if (!_roleManager.RoleExistsAsync(Constants.RoleAdmin).GetAwaiter().GetResult())
-        {
-            _roleManager.CreateAsync(new IdentityRole(Constants.RoleAdmin)).GetAwaiter().GetResult();
-            _roleManager.CreateAsync(new IdentityRole(Constants.RoleUser)).GetAwaiter().GetResult();
-
-            _userManager.CreateAsync(new IdentityUser
-            {
-                UserName = "admin",
+                UserName = "admin@test.com",
                 Email = "admin@test.com"
-            }, "Pa$$w0rd").GetAwaiter().GetResult();
+            }, "Pa$$w0rd");
 
-            IdentityUser admin = _userManager.FindByEmailAsync("admin@test.com").GetAwaiter().GetResult();
+            var admin = await _userManager.FindByEmailAsync("admin@test.com");
 
-            _userManager.AddToRoleAsync(admin, Constants.RoleAdmin).GetAwaiter().GetResult();
+            await _userManager.AddToRoleAsync(admin, Constants.RoleAdmin);
         }
         return;
     }

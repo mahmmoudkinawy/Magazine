@@ -1,7 +1,3 @@
-using Magazine.DbInitializer;
-using Magazine.Helpers;
-using Microsoft.AspNetCore.Identity.UI.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -10,10 +6,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 

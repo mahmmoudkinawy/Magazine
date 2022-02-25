@@ -7,6 +7,12 @@ public static class ApplicationServicesExtension
         services.AddDbContext<MagazineDbContext>(options =>
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
 
+        services.AddScoped<IDbInitializer, DbInitializer.DbInitializer>();
+
+        services.AddScoped<IEmailSender, EmailSender>();
+
+        services.AddSingleton<IEmailSender, EmailSender>();
+
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         return services;

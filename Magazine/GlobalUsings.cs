@@ -14,3 +14,7 @@ global using Magazine.Extensions;
 global using System.Text.Json;
 global using Magazine.Middleware;
 global using System.Diagnostics;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity;
+
+

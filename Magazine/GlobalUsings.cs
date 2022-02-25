@@ -19,5 +19,4 @@ global using Microsoft.AspNetCore.Identity;
 global using Magazine.Helpers;
 global using Magazine.DbInitializer;
 global using Microsoft.AspNetCore.Identity.UI.Services;
-
-
+global using Microsoft.AspNetCore.Authorization;

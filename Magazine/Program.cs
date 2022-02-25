@@ -5,10 +5,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<MagazineDbContext>();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-
 builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();

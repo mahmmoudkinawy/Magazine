@@ -1,11 +1,10 @@
 ﻿namespace Magazine.Controllers;
-public class CategoriesController : Controller
+public class CategoriesController : BaseController
 {
     private readonly IGenericRepository<Category> _categoryRepository;
 
     public CategoriesController(IGenericRepository<Category> categoryRepository)
         => _categoryRepository = categoryRepository;
-
 
     public async Task<IActionResult> Index()
         => View(await _categoryRepository.GetAllAsync());

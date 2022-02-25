@@ -1,5 +1,5 @@
 ﻿namespace Magazine.Controllers;
-public class ArticlesController : Controller
+public class ArticlesController : BaseController
 {
     private readonly IGenericRepository<Article> _articleRepository;
     private readonly IGenericRepository<Category> _categoryRepository;

@@ -2,6 +2,6 @@
 public static class Constants
 {
     //ROLES
-    public static readonly string RoleAdmin = "Admin";
-    public static readonly string RoleUser = "User";
+    public const string RoleAdmin = "Admin";
+    public const string RoleUser = "User";
 }

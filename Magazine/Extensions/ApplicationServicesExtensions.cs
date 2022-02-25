@@ -1,5 +1,5 @@
 ﻿namespace Magazine.Extensions;
-public static class ApplicationServicesExtension
+public static class ApplicationServicesExtensions
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services,
         IConfiguration config)
@@ -15,16 +15,7 @@ public static class ApplicationServicesExtension
 
         services.AddScoped<IEmailSender, EmailSender>();
 
-        services.AddSingleton<IEmailSender, EmailSender>();
-
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-        services.ConfigureApplicationCookie(options =>
-        {
-            options.LoginPath = "/Identity/Account/Login";
-            options.LogoutPath = "/Identity/Account/Logout";
-            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-        });
 
         return services;
     }

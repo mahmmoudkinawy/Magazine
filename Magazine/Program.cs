@@ -1,11 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<MagazineDbContext>();
-
 // Add services to the container.
 builder.Services.AddApplicationServices(builder.Configuration);
+
+builder.Services.AddIdentityServices();
 
 var app = builder.Build();
 

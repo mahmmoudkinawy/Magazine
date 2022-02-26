@@ -17,3 +17,5 @@ global using Magazine.Middleware;
 global using System.Diagnostics;
 global using Microsoft.AspNetCore.Identity;
 global using Magazine.DbInitializer;
+global using Magazine.Helpers;
+global using Microsoft.AspNetCore.Authorization;

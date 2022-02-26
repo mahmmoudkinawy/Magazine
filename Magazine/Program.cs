@@ -1,17 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<MagazineDbContext>();
-
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
 // Add services to the container.
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddApplicationServices(builder.Configuration);
+
+builder.Services.AddIdentityServices();
 
 var app = builder.Build();
 

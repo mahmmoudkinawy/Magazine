@@ -9,6 +9,12 @@ public static class ApplicationServicesExtension
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+        services.AddRazorPages().AddRazorRuntimeCompilation();
+
+        services.AddScoped<IDbInitializer, DbInitializer.DbInitializer>();
+
+        services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
         return services;
     }
 }

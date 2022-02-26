@@ -1,6 +1,4 @@
-﻿using Magazine.Helpers;
-
-namespace Magazine.DbInitializer;
+﻿namespace Magazine.DbInitializer;
 public class DbInitializer : IDbInitializer
 {
     private readonly UserManager<IdentityUser> _userManager;

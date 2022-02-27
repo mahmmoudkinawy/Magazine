@@ -1,4 +1,6 @@
 ﻿namespace Magazine.Controllers;
+
+[Authorize(Roles = Constants.RoleAdmin)]
 public class ArticlesController : Controller
 {
     private readonly IGenericRepository<Article> _articleRepository;

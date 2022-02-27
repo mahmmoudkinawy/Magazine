@@ -1,5 +1,5 @@
 ﻿namespace Magazine.Data;
-public class MagazineDbContext : DbContext
+public class MagazineDbContext : IdentityDbContext
 {
     public MagazineDbContext(DbContextOptions<MagazineDbContext> options) : base(options)
     { }

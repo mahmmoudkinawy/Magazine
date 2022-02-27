@@ -1,7 +1,5 @@
 ﻿namespace Magazine.Controllers;
-
-[AllowAnonymous]
-public class HomeController : BaseController
+public class HomeController : Controller
 {
     private readonly IGenericRepository<Article> _articleRepository;
 

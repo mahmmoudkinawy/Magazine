@@ -1,5 +1,7 @@
 ﻿namespace Magazine.Controllers;
-public class CategoriesController : BaseController
+
+[Authorize(Roles = Constants.RoleAdmin)]
+public class CategoriesController : Controller
 {
     private readonly IGenericRepository<Category> _categoryRepository;
 
